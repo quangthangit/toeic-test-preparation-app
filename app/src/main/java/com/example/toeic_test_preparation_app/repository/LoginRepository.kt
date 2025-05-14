@@ -15,7 +15,7 @@ class LoginRepository(private val context: Context) {
     fun login(request: UserRequest): LiveData<Result<UserResponse>> {
         val result = MutableLiveData<Result<UserResponse>>()
 
-        RetrofitClient.apiService.loginUser(request).enqueue(object : Callback<UserResponse> {
+        RetrofitClient.apiService.login(request).enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
