@@ -1,11 +1,11 @@
-package com.example.toeic_test_preparation_app.ui.fragment
+package com.example.toeic_test_preparation_app.ui.fragment.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import com.example.toeic_test_preparation_app.R
 
 class StartFragment : Fragment() {
@@ -27,7 +27,7 @@ class StartFragment : Fragment() {
 
         btnLogin.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.mainFrameLayout,LoginFragment())
+                .replace(R.id.mainFrameLayout, LoginFragment())
                 .commit()
         }
         return view

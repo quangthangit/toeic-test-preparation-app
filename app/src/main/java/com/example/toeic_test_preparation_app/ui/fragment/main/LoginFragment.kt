@@ -1,8 +1,7 @@
-package com.example.toeic_test_preparation_app.ui.fragment
+package com.example.toeic_test_preparation_app.ui.fragment.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.toeic_test_preparation_app.R
 import com.example.toeic_test_preparation_app.ui.activity.HomeActivity

@@ -1,13 +1,14 @@
-package com.example.toeic_test_preparation_app.ui.fragment
+package com.example.toeic_test_preparation_app.ui.fragment.main
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.toeic_test_preparation_app.R
+import com.example.toeic_test_preparation_app.ui.fragment.main.StartFragment
 
 class SplashFragment : Fragment() {
 
