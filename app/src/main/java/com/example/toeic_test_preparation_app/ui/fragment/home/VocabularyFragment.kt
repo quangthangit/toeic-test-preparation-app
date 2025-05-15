@@ -5,56 +5,63 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.toeic_test_preparation_app.ui.adapter.VocabularyTopicAdapter
+import com.example.toeic_test_preparation_app.ui.viewmodel.VocabularyTopicViewModel
 import com.example.toeic_test_preparation_app.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [VocabularyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class VocabularyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var viewModel: VocabularyTopicViewModel
+    private lateinit var progressBar: ProgressBar
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: VocabularyTopicAdapter
+    private lateinit var emptyView : View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vocabulary, container, false)
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_vocabulary, container, false)
+        progressBar = view.findViewById(R.id.progressBar)
+        recyclerView = view.findViewById(R.id.listTopic)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = VocabularyTopicAdapter(emptyList())
+        recyclerView.adapter = adapter
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment VocabularyFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            VocabularyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity())[VocabularyTopicViewModel::class.java]
+        emptyView = view.findViewById<View>(R.id.emptyView)
+
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.topics.observe(viewLifecycleOwner) { result ->
+            result.onSuccess { topics ->
+                if (topics.isEmpty()) {
+//                    recyclerView.visibility = View.GONE
+                    emptyView.visibility = View.VISIBLE
+                } else {
+                    adapter.updateTopicList(topics)
+                    recyclerView.visibility = View.VISIBLE
+                    emptyView.visibility = View.GONE
                 }
+            }.onFailure {
+//                recyclerView.visibility = View.GONE
+                emptyView.visibility = View.VISIBLE
             }
+        }
+
+        if (viewModel.topics.value?.getOrNull().isNullOrEmpty()) {
+            viewModel.loadTopicsIfNeeded()
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.toeic_test_preparation_app.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.toeic_test_preparation_app.AuthManager
@@ -22,6 +23,7 @@ class LoginRepository(private val context: Context) {
                     val authManager = AuthManager(context)
                     authManager.saveToken(loginResponse.user.token)
                     result.value = Result.success(loginResponse)
+                    Log.d("THANG",loginResponse.user.token)
                 } else {
                     result.value = Result.failure(Exception("Lỗi: ${response.code()}"))
                 }
