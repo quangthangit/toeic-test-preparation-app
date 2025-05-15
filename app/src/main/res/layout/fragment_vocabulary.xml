@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/border_gray"
+            android:background="@drawable/border_white"
             android:backgroundTint="#007DD4"
             android:padding="5dp"
             android:paddingHorizontal="15dp">
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/border_gray"
+                android:background="@drawable/border_white"
                 android:backgroundTint="@color/white"
                 android:fontFamily="serif"
                 android:paddingHorizontal="15dp"
